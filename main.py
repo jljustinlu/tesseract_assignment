@@ -30,10 +30,11 @@ def main():
             if instr == "ADD":
                 if record == "PATIENT":
                     id = info[2]
-                    name = info[3:]
+                    name_list = info[3:]
+                    name = " ".join(name_list)
                     patient = Patient(name, id)
                     if id not in patients:
-                        patient[id] = patient
+                        patients[id] = patient
                 elif record == "EXAM":
                     p_id = info[2]
                     e_id = info[3]
@@ -42,7 +43,6 @@ def main():
                         exams[e_id] = exam
                     if p_id in patients:
                         patients[p_id].add_exam(e_id)
-
             elif instr == "DEL":
                 if record == "PATIENT":
                     id = info[2]
@@ -54,8 +54,8 @@ def main():
                     id = info[2]
                     if id in exams:
                         del exams[id]
-    for patient in patients:
-        print(f"Name: {patient[name]}, Id: {patient[id]}, Exam Count: {patient.num_exams}")
+    for id, patient in patients.items():
+        print(f"Name: {patient.name}, Id: {id}, Exam Count: {patient.num_exams}")
 
 
 if __name__ == "__main__":
